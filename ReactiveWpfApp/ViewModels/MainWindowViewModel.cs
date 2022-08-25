@@ -22,8 +22,8 @@ namespace ReactiveWpfApp.ViewModels
                         .ObserveOn(RxApp.MainThreadScheduler)
                         .ToProperty(this, x => x.ProductViewModels);
 
-            productViewModels.ThrownExceptions.Subscribe(error => 
-            { 
+            _ = productViewModels.ThrownExceptions.Subscribe(error =>
+            {
                 /* Handle errors here */
             });
         }
@@ -41,9 +41,9 @@ namespace ReactiveWpfApp.ViewModels
 
         public async Task<IEnumerable<ProductViewModel>> GetProductViewModels(string term)
         {
-            var list = new List<ProductViewModel>();
+            List<ProductViewModel> list = new List<ProductViewModel>();
 
-            await Task.Run(new Action(() => 
+            await Task.Run(new Action(() =>
             {
                 for (int i = 0; i < 10000; i++)
                 {
@@ -51,14 +51,7 @@ namespace ReactiveWpfApp.ViewModels
                 }
             })).ConfigureAwait(false);
 
-            if (string.IsNullOrEmpty(term))
-            {
-                return list;
-            }
-            else
-            {
-                return list.Where(f => f.Name.Contains(term));
-            }
+            return string.IsNullOrEmpty(term) ? list : list.Where(f => f.Name.Contains(term));
         }
     }
 }
