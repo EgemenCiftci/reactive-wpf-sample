@@ -10,7 +10,6 @@ namespace ReactiveWpfApp.Models
         public ProductViewModel(Product metadata)
         {
             _metadata = metadata;
-            OpenPage = ReactiveCommand.Create(() => { });
         }
 
         public int Id => _metadata.Id;
@@ -18,7 +17,5 @@ namespace ReactiveWpfApp.Models
         public string Name => _metadata.Name;
 
         public int Count => _metadata.Count;
-
-        public ReactiveCommand<Unit, Unit> OpenPage { get; }
     }
 }
